@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla Curricular - Ingeniería Mecatrónica</title>
+  <style>
+    body {
+      background-color: #fff0f6;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #b30086;
+    }
+    .semester {
+      background-color: #fde4f2;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      max-width: 1200px;
+      box-shadow: 0 0 8px #e3b0d3;
+      flex-direction: row;
+    }
+    .semester h2 {
+      color: #a00070;
+      width: 100%;
+      text-align: center;
+    }
+    .subject {
+      background-color: #ffc2e0;
+      margin: 5px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      min-width: 180px;
+      text-align: center;
+    }
+    .subject.locked {
+      background-color: #ffe6f0;
+      color: #aaa;
+      pointer-events: none;
+      border: 1px dashed #ccc;
+    }
+    .subject.viewed {
+      background-color: #c09;
+      color: white;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Malla Curricular - Ingeniería Mecatrónica</h1>
+  <div id="curriculum"></div>
+
+  <script>
+    const subjects = []; // Placeholder para insertar luego con materias completas
+  </script>
+</body>
+</html>
