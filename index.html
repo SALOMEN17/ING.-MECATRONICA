@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla Curricular - Ingeniería Mecatrónica</title>
+  <style>
+    body {
+      background-color: #fff0f5;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #880e4f;
+    }
+    h1 {
+      text-align: center;
+      color: #ad1457;
+      margin-top: 30px;
+    }
+    .semestre {
+      background-color: #fce4ec;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .semestre h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #880e4f;
+    }
+    .materia {
+      background-color: #f8bbd0;
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin: 8px 0;
+      cursor: pointer;
+      box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      transition: background-color 0.3s, text-decoration 0.3s;
+    }
+    .materia:hover {
+      background-color: #f48fb1;
+    }
+    .vista {
+      text-decoration: underline;
+      background-color: #ce93d8 !important;
+    }
+    .oculto {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Malla Curricular - Ingeniería Mecatrónica</h1>
+
+<div id="malla"></div>
+
+<script>
+  const materias = [
+    { nombre: "Cálculo Diferencial", creditos: 3, semestre: 1 },
+    { nombre: "Álgebra Lineal", creditos: 3, semestre: 1 },
+    { nombre: "Introducción a la Ingeniería", creditos: 2, semestre: 1 },
+    { nombre: "Dibujo de Ingeniería", creditos: 2, semestre: 1 },
+    { nombre: "Comunicación Oral y Escrita", creditos: 2, semestre: 1 },
+    { nombre: "Cátedra de Henri Didon", creditos: 0, semestre: 1 },
+    { nombre: "Inglés 1", creditos: 2, semestre: 1 },
+
+    { nombre: "Cálculo Integral", creditos: 3, semestre: 2, prereq: ["Cálculo Diferencial"] },
+    { nombre: "Física Mecánica", creditos: 3, semestre: 2, prereq: ["Álgebra Lineal", "Cálculo Diferencial"] },
+    { nombre: "Química General", creditos: 3, semestre: 2 },
+    { nombre: "Probabilidad y Estadística", creditos: 2, semestre: 2 },
+    { nombre: "Dibujo de Máquinas", creditos: 2, semestre: 2 },
+    { nombre: "Lógica de Programación", creditos: 3, semestre: 2 },
+    { nombre: "Inglés 2", creditos: 2, semestre: 2, prereq: ["Inglés 1"] },
+
+    { nombre: "Cálculo Vectorial", creditos: 3, semestre: 3, prereq: ["Cálculo Integral"] },
+    { nombre: "Electricidad y Magnetismo", creditos: 3, semestre: 3, prereq: ["Física Mecánica"] },
+    { nombre: "Ciencia de Materiales", creditos: 2, semestre: 3 },
+    { nombre: "Estática", creditos: 3, semestre: 3, prereq: ["Física Mecánica"] },
+    { nombre: "Programación Orientada a Objetos", creditos: 2, semestre: 3, prereq: ["Lógica de Programación"] },
+    { nombre: "Antropología", creditos: 2, semestre: 3 },
+    { nombre: "Inglés 3", creditos: 2, semestre: 3, prereq: ["Inglés 2"] },
+
+    { nombre: "Ecuaciones Diferenciales", creditos: 3, semestre: 4, prereq: ["Cálculo Vectorial"] },
+    { nombre: "Termofluidos", creditos: 3, semestre: 4, prereq: ["Estática"] },
+    { nombre: "Dinámica", creditos: 3, semestre: 4, prereq: ["Estática"] },
+    { nombre: "Circuitos Eléctricos", creditos: 3, semestre: 4, prereq: ["Electricidad y Magnetismo"] },
+    { nombre: "Laboratorio de Circuitos", creditos: 1, semestre: 4, prereq: ["Circuitos Eléctricos"] },
+    { nombre: "Epistemología", creditos: 2, semestre: 4 },
+    { nombre: "Inglés 4", creditos: 2, semestre: 4, prereq: ["Inglés 3"] },
+
+    { nombre: "Análisis Numérico", creditos: 2, semestre: 5 },
+    { nombre: "Señales", creditos: 3, semestre: 5, prereq: ["Circuitos Eléctricos"] },
+    { nombre: "Resistencia de Materiales", creditos: 3, semestre: 5, prereq: ["Estática"] },
+    { nombre: "Máquinas Eléctricas y Laboratorio", creditos: 3, semestre: 5, prereq: ["Circuitos Eléctricos"] },
+    { nombre: "Electrónica Analógica", creditos: 3, semestre: 5, prereq: ["Circuitos Eléctricos"] },
+    { nombre: "Laboratorio de Electrónica", creditos: 1, semestre: 5, prereq: ["Electrónica Analógica"] },
+    { nombre: "Cátedra Opcional 1", creditos: 1, semestre: 5 },
+    { nombre: "Inglés 5", creditos: 2, semestre: 5, prereq: ["Inglés 4"] },
+
+    { nombre: "Sistemas Oleoneumáticos y Lab", creditos: 3, semestre: 6 },
+    { nombre: "Diseño de Elementos de Máquinas", creditos: 3, semestre: 6, prereq: ["Resistencia de Materiales"] },
+    { nombre: "Automatismos", creditos: 2, semestre: 6, prereq: ["Electrónica Analógica"] },
+    { nombre: "Instrumentación Industrial y Lab", creditos: 2, semestre: 6 },
+    { nombre: "Electrónica Digital", creditos: 3, semestre: 6, prereq: ["Electrónica Analógica"] },
+    { nombre: "Laboratorio de Electrónica Digital", creditos: 1, semestre: 6, prereq: ["Electrónica Digital"] },
+    { nombre: "Cátedra Complementaria 1", creditos: 1, semestre: 6 },
+    { nombre: "Inglés 6", creditos: 2, semestre: 6, prereq: ["Inglés 5"] },
+
+    { nombre: "Automatización Industrial y Lab", creditos: 3, semestre: 7, prereq: ["Automatismos"] },
+    { nombre: "Análisis de Sistemas Dinámicos", creditos: 3, semestre: 7 },
+    { nombre: "Procesos de Manufactura y Lab", creditos: 2, semestre: 7 },
+    { nombre: "Electrónica de Potencia y Lab", creditos: 3, semestre: 7, prereq: ["Electrónica Digital"] },
+    { nombre: "Sistemas Embebidos", creditos: 2, semestre: 7 },
+    { nombre: "Cátedra Complementaria 2", creditos: 1, semestre: 7 },
+    { nombre: "Cátedra Opcional 2", creditos: 1, semestre: 7 },
+    { nombre: "Economía para Ingenieros", creditos: 2, semestre: 7 },
+
+    { nombre: "Electiva Profesional 1", creditos: 2, semestre: 8 },
+    { nombre: "Electiva Profesional 2", creditos: 2, semestre: 8 },
+    { nombre: "Comunicaciones Industriales y Lab", creditos: 3, semestre: 8 },
+    { nombre: "Sistemas de Control 1 y Lab", creditos: 3, semestre: 8, prereq: ["Análisis de Sistemas Dinámicos"] },
+    { nombre: "Inteligencia Artificial", creditos: 2, semestre: 8 },
+    { nombre: "Cátedra Complementaria 3", creditos: 1, semestre: 8 },
+    { nombre: "Cultura Teológica", creditos: 2, semestre: 8 },
+    { nombre: "Gestión de Proyectos", creditos: 2, semestre: 8 },
+
+    { nombre: "Electiva Profesional 3", creditos: 2, semestre: 9 },
+    { nombre: "Electiva Profesional 4", creditos: 2, semestre: 9 },
+    { nombre: "Robótica y Lab", creditos: 3, semestre: 9, prereq: ["Sistemas de Control 1 y Lab"] },
+    { nombre: "Sistemas de Control 2 y Lab", creditos: 3, semestre: 9, prereq: ["Sistemas de Control 1 y Lab"] },
+    { nombre: "Diseño Mecatrónico", creditos: 3, semestre: 9 },
+    { nombre: "Filosofía Política", creditos: 2, semestre: 9 },
+    { nombre: "Legislación", creditos: 2, semestre: 9 },
+
+    { nombre: "Electiva Profesional 5", creditos: 2, semestre: 10 },
+    { nombre: "Electiva Profesional 6", creditos: 2, semestre: 10 },
+    { nombre: "Proyecto de Grado o Pasantía", creditos: 4, semestre: 10 },
+    { nombre: "Ética", creditos: 2, semestre: 10 },
+    { nombre: "Cátedra Opcional 3", creditos: 1, semestre: 10 },
+  ];
+
+  const estados = {};
+  const malla = document.getElementById("malla");
+
+  for (let s = 1; s <= 10; s++) {
+    const contenedor = document.createElement("div");
+    contenedor.className = "semestre";
+    const titulo = document.createElement("h2");
+    titulo.textContent = `${s}° Semestre`;
+    contenedor.appendChild(titulo);
+    materias.filter(m => m.semestre === s).forEach(m => {
+      const div = document.createElement("div");
+      div.textContent = `${m.nombre} (${m.creditos} créditos)`;
+      div.className = "materia";
+      if (m.prereq) div.classList.add("oculto");
+      div.onclick = () => {
+        div.classList.toggle("vista");
+        estados[m.nombre] = !estados[m.nombre];
+        materias.forEach(x => {
+          if (x.prereq && x.prereq.every(p => estados[p])) {
+            const mats = [...document.querySelectorAll(".materia")];
+            const desbloquear = mats.find(m => m.textContent.startsWith(x.nombre));
+            if (desbloquear) desbloquear.classList.remove("oculto");
+          }
+        });
+      };
+      contenedor.appendChild(div);
+    });
+    malla.appendChild(contenedor);
+  }
+</script>
+
+</body>
+</html>
